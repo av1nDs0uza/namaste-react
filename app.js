@@ -1,34 +1,55 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-const parent = React.createElement(
-    "div", 
-    {id:"parent"},
-    React.createElement(
-        "div", 
-        {id:"child1"},
-        [
-            React.createElement("h1", {}, "This is Namaste React"),
-            React.createElement("h2", {}, "I'm an h2 tag"),
-            React.createElement("h3", {}, "I'm an h3 tag"),
-            React.createElement("h4", {}, "I'm an h4 tag"),
-            React.createElement("h5", {}, "I'm an h5 tag"),
-        ]
-    ),
-    React.createElement(
-        "div", 
-        {id:"child2"},
-        [
-            React.createElement("h1", {}, "I'm an h1 tag"),
-            React.createElement("h2", {}, "I'm an h2 tag"),
-            React.createElement("h3", {}, "I'm an h3 tag"),
-            React.createElement("h4", {}, "I'm an h4 tag"),
-            React.createElement("h5", {}, "I'm an h5 tag"),
-        ]
-    )
+
+
+const elem = <span> React Element </span>
+
+// React Element => Object => HTMLElement(render)
+
+const Title = () => (
+    <h1 className="head" tabIndex="5">
+        {elem}
+        Namaste React using JSX
+    </h1>
+)
+
+// // JSX - is not HTML in JS
+// const jsxHeading = <h1 className="head"> Namaste react using JSX</h1>
+
+// console.log(jsxHeading);
+
+// React Component
+// Class based Component - OLD
+// Functional Component - NEW
+
+// // React Functional Component
+// const HeadingComponent = () => {
+//     return <h1> Namaste React Functional Component</h1>
+// };
+
+
+
+const data = 10000;
+
+//always use this (industry standard) 
+
+// composing two components into one another is component composition
+const HeadingComponent = () => (
+    < div id="container">
+        <Title></Title>
+        {Title()}
+        
+        <h1 className="heading"> Namaste React Functional Component</h1>
+    </div>
+    
 );
 
-console.log(parent);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(parent);
+root.render(<HeadingComponent />);
+
+
+
+
