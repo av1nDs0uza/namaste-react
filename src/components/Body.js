@@ -4,10 +4,16 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
  
 const Body = () => {
+  const [allRestaurants, setAllRestaurants] = useState([]); // Original data
 
   // Local State Variable - Super powerful variable
 
   const [listOfRestaurants, setListOfRestaurant] = useState([]);
+
+  const [searchText,setSearchText] = useState("");
+
+
+  //Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
 
   useEffect(() =>{
     fetchData();
@@ -22,7 +28,10 @@ const Body = () => {
 
     console.log(json);
     //Optional Chaining
-    setListOfRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    const restaurants =
+        json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+      setAllRestaurants(restaurants); // Set original data
+      setListOfRestaurant(restaurants);
   };
   
   // Conditional Rendering
@@ -33,6 +42,25 @@ const Body = () => {
     return(
         <div className="body">
             <div className="filter">
+            <div className="search">
+            <input
+              type="text"
+              className="search-box"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button
+              className="search-btn"
+              onClick={() => {
+                const filteredRestaurant = allRestaurants.filter((res) =>
+                  res?.info?.name?.toLowerCase().includes(searchText.toLowerCase())
+                );
+                setListOfRestaurant(filteredRestaurant); // Update the displayed data
+              }}
+            >
+              Search
+            </button>
+          </div>
               <button className="filter-btn" 
               onClick={() => {
                 
@@ -46,7 +74,7 @@ const Body = () => {
                   Top Rated Restaurants
                 </button>
                 <button onClick={() => {
-                    setListOfRestaurant(resList);
+                    setListOfRestaurant(allRestaurants);
                   }}>Reset</button>
             </div>
             <div className="res-container">
