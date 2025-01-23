@@ -2,6 +2,7 @@
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantCategory from "./RestaurantCategory";
 
 
 const RestaurantMenu = () =>{
@@ -39,33 +40,19 @@ const RestaurantMenu = () =>{
     return  resInfo == null ? (
         <Shimmer />
     ): (
-        <div className="menu">
-            <h1>{name || "Unknown Restaurant"}</h1>
-            <h2>{cuisines?.join(", ") || "Cuisines not available"}</h2>
+        <div className="text-center">
+            <h1 className="font-bold my-6 text-2xl">{name || "Unknown Restaurant"}</h1>
+            <h2 className="font-bold my-2 text-xl">{cuisines?.join(", ") || "Cuisines not available"}</h2>
             {cloudinaryImageId && (
                 <img
                     src={`https://res.cloudinary.com/swiggy/image/upload/${cloudinaryImageId}`}
                     alt={name}
                 />
             )}
-            <p>{costForTwoMessage || "Cost information not available"}</p>
-            <h2>Menu</h2>
+            <p className="font-bold text-lg">{costForTwoMessage || "Cost information not available"}</p>
+            <h2 className="font-bold my-2 text-xl">Menu</h2>
             {allMenuItems.map((category, index) => (
-                <div key={index}>
-                <h3>{category.categoryName || "Unnamed Category"}</h3>
-                <ul>
-                    {category.items.map((item, itemIndex) => (
-                    <li key={itemIndex}>
-                        <strong>{item.name}</strong> - {item.description || "No description available"}
-                        <p> </p>
-                        <span>
-                            Price: ₹{(item.price || item.defaultPrice) / 100 || "Price not available"}
-                        </span>
-                    </li>
-                    
-                    ))}
-                </ul>
-                </div>
+                <RestaurantCategory key={index} category={category} />
             ))}
         </div>
     );
