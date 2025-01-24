@@ -1,10 +1,19 @@
 import React, { useState } from "react";
+import { addItem } from "../utils/cartSlice";
 import { CDN_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
 
 const RestaurantCategory = ({ category }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => setIsOpen(!isOpen);
+
+  const dispatch = useDispatch();
+
+  const handleAddItem =(item) => {
+    // Dispatch an action
+    dispatch(addItem(item));
+  }
 
   return (
     <div className="border-b border-gray-200">
@@ -74,7 +83,7 @@ const RestaurantCategory = ({ category }) => {
                     className="w-16 h-16 object-cover rounded-md"
                   />
                 )}
-                <button className="p-2 bg-white shadow-lg rounded-full text-sm text-gray-700">
+                <button className="p-2 bg-white shadow-lg rounded-full text-sm text-gray-700" onClick={() =>handleAddItem(item)}>
                   Add +
                 </button>
               </div>
